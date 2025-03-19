@@ -1,23 +1,23 @@
-const express = require('express');
-const app = express();
-require('dotenv').config();
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const schoolRoutes = require("./routes/schoolRoutes"); // Ensure this path is correct
 
-// Import Routes
-const schoolRoutes = require('./routes/schoolRoutes'); // Correct relative path
+const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(bodyParser.json());
 
-// API Routes
-app.use('/api', schoolRoutes);
+// Routes
+app.use("/api", schoolRoutes);
 
-// Default route (optional, for testing base URL)
-app.get('/', (req, res) => {
-    res.send('Welcome to School Management API');
+// Default Route
+app.get("/", (req, res) => {
+    res.send("Welcome to the School Management API");
 });
 
 // Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });
