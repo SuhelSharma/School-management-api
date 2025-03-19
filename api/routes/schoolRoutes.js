@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const schoolController = require('../controllers/schoolController'); // Correct relative path
+const schoolController = require('../controllers/schoolController');
 
-// POST: Add School
+router.get('/schools', schoolController.getAllSchools);
 router.post('/addSchool', schoolController.addSchool);
-
-// GET: List Schools
-router.get('/listSchools', schoolController.listSchools);
 
 module.exports = router;
