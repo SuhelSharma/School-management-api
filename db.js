@@ -6,19 +6,20 @@ const pool = mysql.createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
 });
 
-// Test DB Connection
+// Test Database Connection
 async function testDBConnection() {
     try {
         const connection = await pool.getConnection();
-        console.log("✅ Database connected successfully!");
+        console.log("✅ Connected to MySQL Database!");
         connection.release();
     } catch (error) {
-        console.error("❌ Database connection failed:", error.message);
+        console.error("❌ Database Connection Failed:", error.message);
     }
 }
 

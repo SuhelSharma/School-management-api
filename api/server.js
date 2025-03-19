@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const schoolRoutes = require("./routes/schoolRoutes"); // Ensure this path is correct
+const schoolRoutes = require("../routes/schoolRoutes"); // Ensure this path is correct
 
 const app = express();
 
