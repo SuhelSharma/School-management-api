@@ -1,8 +1,8 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const schoolRoutes = require("./routes/schoolRoutes");
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const schoolRoutes = require('./routes/schoolRoutes');
 
 const app = express();
 
@@ -11,11 +11,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Register API Routes
-app.use("/api", schoolRoutes);
+app.use('/api', schoolRoutes);
 
 // Default Route
-app.get("/", (req, res) => {
-    res.send("Welcome to the School Management API");
+app.get('/', (req, res) => {
+    res.send('Welcome to the School Management API');
 });
 
 // Start Server
