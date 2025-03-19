@@ -9,7 +9,9 @@ const pool = new Pool({
     port: process.env.DB_PORT || 5432,
     max: 10,
     idleTimeoutMillis: 30000,
-    ssl: { rejectUnauthorized: false }
+    ssl: {
+        rejectUnauthorized: false, // Important for Neon SSL
+    }
 });
 
 // Test Database Connection
@@ -23,6 +25,9 @@ async function testDBConnection() {
     }
 }
 
-testDBConnection();
+// Prevent running the test in production unnecessarily (Optional, but recommended)
+if (process.env.NODE_ENV !== 'production') {
+    testDBConnection();
+}
 
 module.exports = pool;
