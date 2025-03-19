@@ -1,11 +1,12 @@
-require("dotenv").config();
 const express = require("express");
+const cors = require("cors"); // Import CORS
 const bodyParser = require("body-parser");
-const schoolRoutes = require("../routes/schoolRoutes"); // Ensure this path is correct
+const schoolRoutes = require("./routes/schoolRoutes");
 
 const app = express();
 
-// Middleware
+// Enable CORS for all routes
+app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
