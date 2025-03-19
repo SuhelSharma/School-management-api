@@ -4,21 +4,20 @@ const db = require("../db");
 exports.addSchool = async (req, res) => {
     let { name, address, latitude, longitude } = req.body;
 
-    // Validation: Ensure all fields are present and correctly formatted
     if (!name || !address || latitude === undefined || longitude === undefined) {
         return res.status(400).json({ error: "All fields are required" });
     }
-    
+
     latitude = parseFloat(latitude);
     longitude = parseFloat(longitude);
-    
+
     if (isNaN(latitude) || isNaN(longitude)) {
         return res.status(400).json({ error: "Latitude and Longitude must be valid numbers" });
     }
 
     try {
-        await db.execute(
-            "INSERT INTO schools (name, address, latitude, longitude) VALUES (?, ?, ?, ?)",
+        await db.query(
+            "INSERT INTO schools (name, address, latitude, longitude) VALUES ($1, $2, $3, $4)",
             [name, address, latitude, longitude]
         );
         res.status(201).json({ message: "School added successfully" });
@@ -32,29 +31,28 @@ exports.addSchool = async (req, res) => {
 exports.listSchools = async (req, res) => {
     let { latitude, longitude } = req.query;
 
-    // Validation
     if (!latitude || !longitude) {
         return res.status(400).json({ error: "Latitude and longitude are required" });
     }
-    
+
     latitude = parseFloat(latitude);
     longitude = parseFloat(longitude);
-    
+
     if (isNaN(latitude) || isNaN(longitude)) {
         return res.status(400).json({ error: "Latitude and Longitude must be valid numbers" });
     }
 
     try {
-        const [schools] = await db.execute("SELECT * FROM schools");
+        const result = await db.query("SELECT * FROM schools");
+        const schools = result.rows;
 
         if (!schools.length) {
             return res.status(404).json({ message: "No schools found" });
         }
 
-        // Haversine formula for distance calculation
         const toRad = (angle) => (angle * Math.PI) / 180;
         function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Radius of the Earth in km
+            const R = 6371;
             const dLat = toRad(lat2 - lat1);
             const dLon = toRad(lon2 - lon1);
             const a =
@@ -64,7 +62,6 @@ exports.listSchools = async (req, res) => {
             return R * c;
         }
 
-        // Add distance field and sort schools
         const sortedSchools = schools
             .map(school => ({
                 ...school,
