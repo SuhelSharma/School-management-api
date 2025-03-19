@@ -12,11 +12,11 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// Test Database Connection
+// Test the connection
 async function testDBConnection() {
     try {
         const connection = await pool.getConnection();
-        console.log("✅ Connected to MySQL Database!");
+        console.log("✅ Connected to Railway MySQL!");
         connection.release();
     } catch (error) {
         console.error("❌ Database Connection Failed:", error.message);
