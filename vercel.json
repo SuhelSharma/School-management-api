@@ -9,11 +9,11 @@
     "routes": [
       {
         "src": "/addSchool",
-        "dest": "api/server.js"
+        "dest": "server.js"
       },
       {
         "src": "/listSchools",
-        "dest": "api/server.js"
+        "dest": "server.js"
       }
     ]
   }
